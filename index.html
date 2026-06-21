@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="ro">
   <head>
@@ -474,34 +473,69 @@
         word-wrap: break-word;
       }
 
+      /* Ajustare afișare perioade pe dispozitive mobile conform cerințelor */
       @media (max-width: 800px) {
         .periods-header {
           display: none;
         }
         .period-row {
-          grid-template-columns: 30px 1fr 36px;
-        }
-        .period-row select,
-        .period-row input[type="text"],
-        .period-row .date-wrap,
-        .period-row .dur-display {
-          grid-column: 2;
-          margin-bottom: 4px;
+          display: grid;
+          grid-template-columns: 30px repeat(6, 1fr) 36px;
+          gap: 8px 6px;
+          border-bottom: 1px solid #eee;
+          padding-bottom: 12px;
+          margin-bottom: 12px;
+          align-items: center;
         }
         .period-num {
           grid-column: 1;
-          align-self: start;
-          margin-top: 4px;
+          grid-row: 1 / span 2;
+          align-self: center;
+        }
+
+        /* Rândul 1: Tip activitate și Denumire pe un singur rând */
+        .period-row select {
+          grid-column: 2 / span 3;
+          grid-row: 1;
+          margin-bottom: 0;
+          font-size: 13px;
+          padding: 0 4px;
+        }
+        .period-row input.name-input {
+          grid-column: 5 / span 3;
+          grid-row: 1;
+          margin-bottom: 0;
+          font-size: 13px;
+        }
+
+        /* Rândul 2: De la, Până la și Durata pe alt rând */
+        .period-row > :nth-child(4) {
+          grid-column: 2 / span 2;
+          grid-row: 2;
+        } /* De la (primul .date-wrap) */
+        .period-row > :nth-child(5) {
+          grid-column: 4 / span 2;
+          grid-row: 2;
+        } /* Până la (al doilea .date-wrap) */
+        .period-row .dur-display {
+          grid-column: 6 / span 2;
+          grid-row: 2;
+          margin-bottom: 0;
+          font-size: 11px;
+          text-align: center;
+          padding: 0;
+          align-self: center;
+        }
+
+        .period-row .date-wrap input[type="text"] {
+          font-size: 12px;
+          padding: 0 4px;
         }
         .del-btn {
-          grid-column: 3;
-          align-self: start;
-          margin-top: 4px;
-        }
-        .period-row {
-          border-bottom: 1px solid #eee;
-          padding-bottom: 10px;
-          margin-bottom: 10px;
+          grid-column: 8;
+          grid-row: 1 / span 2;
+          align-self: center;
+          margin-top: 0;
         }
       }
     </style>
@@ -767,7 +801,6 @@
         return { y, m, d };
       }
 
-      // Proiecție vârstă standard conform eșalonării
       function getStandardAgeMonthsAtDate(date) {
         const y = date.getFullYear();
         if (y <= 2030) return 60 * 12;
@@ -785,6 +818,27 @@
           else break;
         }
         return reduction;
+      }
+
+      /* Funcție helper adăugată pentru calcularea dinamică a numărului de luni aferent bazei de calcul */
+      function getCalculationMonths(date) {
+        if (!date) return 12;
+        const y = date.getFullYear();
+        const m = date.getMonth(); // 0 = Ian, 5 = Iun, 6 = Iul etc.
+
+        if (y < 2026) return 12;
+        if (y === 2026) {
+          return m >= 5 ? 17 : 16; // Din 01.06.2026 până la 31.12.2026 este 17 luni
+        }
+
+        // Din 2027 încolo (creștere semestrială cu câte 1 lună)
+        // 01.01.2027 - 30.06.2027 -> 18 luni
+        // 01.07.2027 - 31.12.2027 -> 19 luni etc.
+        let months = 18 + (y - 2027) * 2 + (m >= 6 ? 1 : 0);
+
+        // Plafonare maximă conform prevederilor eșalonării pe termen lung pentru pensii militare
+        if (months > 30) months = 30;
+        return months;
       }
 
       function handleDateInput(e, input) {
@@ -962,7 +1016,7 @@
           .join("");
       }
 
-      /* GESTIONARE DATE (LOCAL STORAGE & JSON) */
+      /* GESTIONARE DATE */
 
       function getStateData() {
         return {
@@ -1059,7 +1113,7 @@
         let servYMD = { y: 0, m: 0, d: 0 };
         let specYMD = { y: 0, m: 0, d: 0 };
         let deosYMD = { y: 0, m: 0, d: 0 };
-        let normYMD = { y: 0, m: 0, d: 0 }; // Variabilă nouă adăugată pentru condiții normale/civile
+        let normYMD = { y: 0, m: 0, d: 0 };
 
         for (let i = 0; i < periods.length; i++) {
           const p = periods[i];
@@ -1074,8 +1128,6 @@
           if (p.type !== "civil") servYMD = addYMD_struct(servYMD, diff);
           if (p.type === "speciale") specYMD = addYMD_struct(specYMD, diff);
           if (p.type === "deosebite") deosYMD = addYMD_struct(deosYMD, diff);
-
-          // Însumează perioadele normale și civile (pentru care NU se aplică reducere)
           if (p.type === "normal" || p.type === "civil")
             normYMD = addYMD_struct(normYMD, diff);
         }
@@ -1192,7 +1244,10 @@
             <div class="result-body">
               ${statsHtml}
               <div class="highlight-box hl-green" style="margin-top:14px">
-                <strong>🎯 Drept la pensie desciu:</strong> Puteți ieși la pensie oricând.
+                <strong>🎯 Drept la pensie deschis:</strong> Puteți ieși la pensie oricând.
+                <div style="margin-top:10px; font-size:13px; border-top:1px dashed var(--green-bd); padding-top:8px;">
+                  📋 Baza de calcul pentru stabilirea pensiei (la această dată): <strong>${getCalculationMonths(pensionDate)} luni consecutive</strong>.
+                </div>
               </div>
             </div>
           </div>`;
@@ -1221,6 +1276,7 @@
                   Vârsta standard în ${pensionDate ? pensionDate.getFullYear() : "anul ieșirii"}: <strong>${Math.floor(projStdAgeM / 12)} ani${projStdAgeM % 12 ? " și " + (projStdAgeM % 12) + " luni" : ""}</strong><br>
                   Reducere maximă totală proiectată la acea dată: <strong>−${Math.floor(projTotRed / 12)} ani ${projTotRed % 12 > 0 ? "și " + (projTotRed % 12) + " luni" : ""}</strong><br>
                   Vârsta de pensionare diminuată ce va fi atinsă: <strong style="color: var(--blue);">${Math.floor(projEffAgeM / 12)} ani${projEffAgeM % 12 ? " și " + (projEffAgeM % 12) + " luni" : ""}</strong><br>
+                  📋 Baza de calcul la data pensionării: <strong style="color: #2563ac;">${getCalculationMonths(pensionDate)} luni consecutive</strong>.<br>
                 </div>
                 
                 <div style="margin-top:12px; font-size: 15px; border-top: 1px dashed var(--orange-bd); padding-top: 10px;">
