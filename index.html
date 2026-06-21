@@ -5,538 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator Pensie Militară – Legea 223/2015</title>
     <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
       :root {
-        --bg: #f4f5f7;
-        --card: #ffffff;
-        --border: #e2e4e9;
-        --border2: #c8ccd6;
-        --text: #1a1d23;
-        --text2: #5a6272;
-        --text3: #8c95a6;
-        --blue: #1a5cbf;
-        --blue-bg: #eaf1fd;
-        --blue-bd: #a8c4f0;
-        --green: #1a7a42;
-        --green-bg: #e8f7ee;
-        --green-bd: #88cfa4;
-        --orange: #b05800;
-        --orange-bg: #fff4e6;
-        --orange-bd: #f0c07a;
-        --red: #a82020;
-        --red-bg: #fdf0f0;
-        --red-bd: #e8a0a0;
-        --c-normal: #2563ac;
-        --c-normal-b: #dbeafe;
-        --c-deos: #7c3aed;
-        --c-deos-b: #ede9fe;
-        --c-spec: #b45309;
-        --c-spec-b: #fef3c7;
-        --c-civil: #047857;
-        --c-civil-b: #d1fae5;
+        --bg: #f4f5f7; --card: #ffffff; --border: #e2e4e9; --border2: #c8ccd6;
+        --text: #1a1d23; --text2: #5a6272; --text3: #8c95a6;
+        --blue: #1a5cbf; --blue-bg: #eaf1fd; --blue-bd: #a8c4f0;
+        --green: #1a7a42; --green-bg: #e8f7ee; --green-bd: #88cfa4;
+        --orange: #b05800; --orange-bg: #fff4e6; --orange-bd: #f0c07a;
+        --red: #a82020; --red-bg: #fdf0f0; --red-bd: #e8a0a0;
+        --c-normal: #2563ac; --c-normal-b: #dbeafe;
+        --c-deos: #7c3aed; --c-deos-b: #ede9fe;
+        --c-spec: #b45309; --c-spec-b: #fef3c7;
+        --c-civil: #047857; --c-civil-b: #d1fae5;
       }
-      body {
-        font-family: "Segoe UI", Arial, sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        min-height: 100vh;
-        font-size: 15px;
-        line-height: 1.6;
-      }
-      header {
-        background: #1a2b4a;
-        color: #fff;
-        padding: 18px 24px;
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-      }
-      header .icon {
-        font-size: 28px;
-      }
-      header h1 {
-        font-size: 18px;
-        font-weight: 600;
-        line-height: 1.3;
-      }
-      header p {
-        font-size: 12px;
-        color: #aabbcc;
-        margin-top: 2px;
-      }
-      .container {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 24px 16px 48px;
-      }
-
+      body { font-family: "Segoe UI", Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 15px; line-height: 1.6; }
+      header { background: #1a2b4a; color: #fff; padding: 18px 24px; display: flex; align-items: center; gap: 14px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18); }
+      header .icon { font-size: 28px; }
+      header h1 { font-size: 18px; font-weight: 600; line-height: 1.3; }
+      header p { font-size: 12px; color: #aabbcc; margin-top: 2px; }
+      .container { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+      
       /* Data Management Actions */
-      .actions-bar {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 16px;
-        justify-content: flex-end;
-      }
-      .action-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 8px 14px;
-        border: 1px solid var(--border2);
-        border-radius: 6px;
-        background: #fff;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 500;
-        color: var(--text2);
-        transition: all 0.15s;
-      }
-      .action-btn:hover {
-        background: #f0f4f8;
-        color: var(--blue);
-        border-color: var(--blue-bd);
-      }
+      .actions-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; justify-content: flex-end; }
+      .action-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1px solid var(--border2); border-radius: 6px; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text2); transition: all 0.15s; }
+      .action-btn:hover { background: #f0f4f8; color: var(--blue); border-color: var(--blue-bd); }
 
-      .card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        margin-bottom: 16px;
-        overflow: hidden;
-      }
-      .card-head {
-        background: #f7f8fa;
-        border-bottom: 1px solid var(--border);
-        padding: 11px 18px;
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--text2);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .card-body {
-        padding: 18px;
-      }
-      .form-row {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 12px;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-      .form-row label {
-        font-size: 14px;
-        color: var(--text2);
-        min-width: 170px;
-        font-weight: 500;
-      }
-      .date-wrap {
-        position: relative;
-        display: flex;
-        align-items: center;
-        flex: 1;
-        min-width: 140px;
-      }
-      .period-row .date-wrap {
-        min-width: 110px;
-        width: 100%;
-      }
-      .date-wrap input[type="text"],
-      .form-row select {
-        width: 100%;
-        height: 36px;
-        border: 1px solid var(--border2);
-        border-radius: 6px;
-        padding: 0 10px;
-        font-size: 14px;
-        color: var(--text);
-        background: #fff;
-        outline: none;
-        transition: border-color 0.15s;
-      }
-      .date-wrap input[type="text"] {
-        padding-right: 32px;
-      }
-      .date-wrap input[type="date"] {
-        position: absolute;
-        right: 0;
-        top: 0;
-        height: 100%;
-        width: 32px;
-        opacity: 0;
-        cursor: pointer;
-      }
-      .date-wrap span {
-        position: absolute;
-        right: 8px;
-        pointer-events: none;
-        font-size: 15px;
-      }
-      .date-wrap input[type="text"]:focus,
-      .form-row select:focus {
-        border-color: var(--blue);
-        box-shadow: 0 0 0 3px #dbeafe;
-      }
-      .info-box {
-        background: var(--blue-bg);
-        border: 1px solid var(--blue-bd);
-        border-radius: 7px;
-        padding: 10px 14px;
-        font-size: 13px;
-        color: #1a3a6a;
-        margin-bottom: 14px;
-        line-height: 1.6;
-      }
-
+      .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 16px; overflow: hidden; }
+      .card-head { background: #f7f8fa; border-bottom: 1px solid var(--border); padding: 11px 18px; font-size: 13px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px; }
+      .card-body { padding: 18px; }
+      .form-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: center; flex-wrap: wrap; }
+      .form-row label { font-size: 14px; color: var(--text2); min-width: 170px; font-weight: 500; }
+      .date-wrap { position: relative; display: flex; align-items: center; flex: 1; min-width: 140px; }
+      .period-row .date-wrap { min-width: 110px; width: 100%; }
+      .date-wrap input[type="text"], .form-row select { width: 100%; height: 36px; border: 1px solid var(--border2); border-radius: 6px; padding: 0 10px; font-size: 14px; color: var(--text); background: #fff; outline: none; transition: border-color 0.15s; }
+      .date-wrap input[type="text"] { padding-right: 32px; }
+      .date-wrap input[type="date"] { position: absolute; right: 0; top: 0; height: 100%; width: 32px; opacity: 0; cursor: pointer; }
+      .date-wrap span { position: absolute; right: 8px; pointer-events: none; font-size: 15px; }
+      .date-wrap input[type="text"]:focus, .form-row select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px #dbeafe; }
+      .info-box { background: var(--blue-bg); border: 1px solid var(--blue-bd); border-radius: 7px; padding: 10px 14px; font-size: 13px; color: #1a3a6a; margin-bottom: 14px; line-height: 1.6; }
+      
       /* Grid modificat pentru 7 coloane: # | Tip | Denumire | De la | Pana la | Durata | X */
-      .periods-header {
-        display: grid;
-        grid-template-columns: 30px 130px 1fr 120px 120px 160px 36px;
-        gap: 8px;
-        padding: 0 0 6px;
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--text3);
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-      }
-      .period-row {
-        display: grid;
-        grid-template-columns: 30px 130px 1fr 120px 120px 160px 36px;
-        gap: 8px;
-        margin-bottom: 8px;
-        align-items: center;
-      }
-
-      .period-num {
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        font-weight: 700;
-        color: #fff;
-        flex-shrink: 0;
-      }
-      .period-row input[type="text"],
-      .period-row select {
-        height: 34px;
-        border: 1px solid var(--border2);
-        border-radius: 6px;
-        padding: 0 8px;
-        font-size: 13px;
-        color: var(--text);
-        background: #fff;
-        outline: none;
-        transition: border-color 0.15s;
-        width: 100%;
-      }
-      .period-row input[type="text"]:focus,
-      .period-row select:focus {
-        border-color: var(--blue);
-        box-shadow: 0 0 0 2px #dbeafe;
-      }
-      .del-btn {
-        width: 34px;
-        height: 34px;
-        border: 1px solid var(--border2);
-        border-radius: 6px;
-        background: #fff;
-        cursor: pointer;
-        font-size: 16px;
-        color: var(--text3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.15s;
-        flex-shrink: 0;
-      }
-      .del-btn:hover {
-        background: var(--red-bg);
-        border-color: var(--red-bd);
-        color: var(--red);
-      }
-      .p-normal {
-        background: var(--c-normal);
-      }
-      .p-deosebite {
-        background: var(--c-deos);
-      }
-      .p-speciale {
-        background: var(--c-spec);
-      }
-      .p-civil {
-        background: var(--c-civil);
-      }
-      .sel-normal {
-        border-left: 3px solid var(--c-normal) !important;
-        background: var(--c-normal-b) !important;
-      }
-      .sel-deosebite {
-        border-left: 3px solid var(--c-deos) !important;
-        background: var(--c-deos-b) !important;
-      }
-      .sel-speciale {
-        border-left: 3px solid var(--c-spec) !important;
-        background: var(--c-spec-b) !important;
-      }
-      .sel-civil {
-        border-left: 3px solid var(--c-civil) !important;
-        background: var(--c-civil-b) !important;
-      }
-      .add-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        padding: 8px 18px;
-        border: 1px solid var(--border2);
-        border-radius: 7px;
-        background: #fff;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: 500;
-        color: var(--text2);
-        margin-top: 6px;
-        transition: all 0.15s;
-      }
-      .add-btn:hover {
-        background: var(--blue-bg);
-        border-color: var(--blue);
-        color: var(--blue);
-      }
-      .legend {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 14px;
-        padding-top: 12px;
-        border-top: 1px solid var(--border);
-      }
-      .legend-item {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 12px;
-        color: var(--text2);
-      }
-      .legend-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-      }
-      .calc-btn {
-        width: 100%;
-        padding: 13px;
-        background: #1a2b4a;
-        color: #fff;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.15s;
-        margin-bottom: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-      }
-      .calc-btn:hover {
-        background: #263d63;
-      }
-      #result {
-        display: none;
-      }
-      .result-ok,
-      .result-wait,
-      .result-no {
-        border-radius: 10px;
-        overflow: hidden;
-        border: 1px solid;
-        margin-bottom: 16px;
-      }
-      .result-ok {
-        border-color: var(--green-bd);
-      }
-      .result-wait {
-        border-color: var(--orange-bd);
-      }
-      .result-no {
-        border-color: var(--red-bd);
-      }
-      .result-head {
-        padding: 14px 18px;
-        font-size: 15px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .result-ok .result-head {
-        background: var(--green-bg);
-        color: var(--green);
-      }
-      .result-wait .result-head {
-        background: var(--orange-bg);
-        color: var(--orange);
-      }
-      .result-no .result-head {
-        background: var(--red-bg);
-        color: var(--red);
-      }
-      .result-body {
-        background: #fff;
-        padding: 18px;
-      }
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-        margin-bottom: 16px;
-      }
-      .stat-card {
-        background: #f7f8fa;
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 10px 14px;
-      }
-      .stat-label {
-        font-size: 11px;
-        color: var(--text3);
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        margin-bottom: 4px;
-      }
-      .stat-val {
-        font-size: 17px;
-        font-weight: 700;
-        color: var(--text);
-      }
-      .stat-sub {
-        font-size: 11px;
-        color: var(--text3);
-        margin-top: 2px;
-      }
-      .highlight-box {
-        border-radius: 8px;
-        padding: 12px 16px;
-        margin-top: 12px;
-        font-size: 14px;
-        line-height: 1.7;
-      }
-      .hl-green {
-        background: var(--green-bg);
-        border: 1px solid var(--green-bd);
-        color: #0f4a28;
-      }
-      .hl-orange {
-        background: var(--orange-bg);
-        border: 1px solid var(--orange-bd);
-        color: #6b3800;
-      }
-      .section-sep {
-        font-size: 12px;
-        font-weight: 700;
-        color: var(--text3);
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        margin: 14px 0 8px;
-        padding-bottom: 6px;
-        border-bottom: 1px solid var(--border);
-      }
-      input[type="text"].date-input {
-        letter-spacing: 0.02em;
-        font-feature-settings: "tnum";
-      }
-      .date-err {
-        border-color: #e05050 !important;
-        background: #fff5f5 !important;
-      }
-      .dur-display {
-        font-size: 12px;
-        color: var(--text3);
-        padding: 0 4px;
-        line-height: 1.2;
-        word-wrap: break-word;
-      }
-
+      .periods-header { display: grid; grid-template-columns: 30px 130px 1fr 120px 120px 160px 36px; gap: 8px; padding: 0 0 6px; font-size: 12px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.04em; }
+      .period-row { display: grid; grid-template-columns: 30px 130px 1fr 120px 120px 160px 36px; gap: 8px; margin-bottom: 8px; align-items: center; }
+      
+      .period-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0; }
+      .period-row input[type="text"], .period-row select { height: 34px; border: 1px solid var(--border2); border-radius: 6px; padding: 0 8px; font-size: 13px; color: var(--text); background: #fff; outline: none; transition: border-color 0.15s; width: 100%; }
+      .period-row input[type="text"]:focus, .period-row select:focus { border-color: var(--blue); box-shadow: 0 0 0 2px #dbeafe; }
+      .del-btn { width: 34px; height: 34px; border: 1px solid var(--border2); border-radius: 6px; background: #fff; cursor: pointer; font-size: 16px; color: var(--text3); display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0; }
+      .del-btn:hover { background: var(--red-bg); border-color: var(--red-bd); color: var(--red); }
+      .p-normal { background: var(--c-normal); } .p-deosebite { background: var(--c-deos); } .p-speciale { background: var(--c-spec); } .p-civil { background: var(--c-civil); }
+      .sel-normal { border-left: 3px solid var(--c-normal) !important; background: var(--c-normal-b) !important; } .sel-deosebite { border-left: 3px solid var(--c-deos) !important; background: var(--c-deos-b) !important; } .sel-speciale { border-left: 3px solid var(--c-spec) !important; background: var(--c-spec-b) !important; } .sel-civil { border-left: 3px solid var(--c-civil) !important; background: var(--c-civil-b) !important; }
+      .add-btn { display: inline-flex; align-items: center; gap: 7px; padding: 8px 18px; border: 1px solid var(--border2); border-radius: 7px; background: #fff; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text2); margin-top: 6px; transition: all 0.15s; }
+      .add-btn:hover { background: var(--blue-bg); border-color: var(--blue); color: var(--blue); }
+      .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); } .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text2); } .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+      .calc-btn { width: 100%; padding: 13px; background: #1a2b4a; color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.15s; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 10px; } .calc-btn:hover { background: #263d63; }
+      #result { display: none; }
+      .result-ok, .result-wait, .result-no { border-radius: 10px; overflow: hidden; border: 1px solid; margin-bottom: 16px; }
+      .result-ok { border-color: var(--green-bd); } .result-wait { border-color: var(--orange-bd); } .result-no { border-color: var(--red-bd); }
+      .result-head { padding: 14px 18px; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+      .result-ok .result-head { background: var(--green-bg); color: var(--green); } .result-wait .result-head { background: var(--orange-bg); color: var(--orange); } .result-no .result-head { background: var(--red-bg); color: var(--red); }
+      .result-body { background: #fff; padding: 18px; }
+      .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 16px; }
+      .stat-card { background: #f7f8fa; border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; }
+      .stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; } .stat-val { font-size: 17px; font-weight: 700; color: var(--text); } .stat-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+      .highlight-box { border-radius: 8px; padding: 12px 16px; margin-top: 12px; font-size: 14px; line-height: 1.7; }
+      .hl-green { background: var(--green-bg); border: 1px solid var(--green-bd); color: #0f4a28; } .hl-orange { background: var(--orange-bg); border: 1px solid var(--orange-bd); color: #6b3800; }
+      .section-sep { font-size: 12px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin: 14px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+      input[type="text"].date-input { letter-spacing: 0.02em; font-feature-settings: "tnum"; } .date-err { border-color: #e05050 !important; background: #fff5f5 !important; }
+      .dur-display { font-size:12px; color:var(--text3); padding:0 4px; line-height:1.2; word-wrap: break-word; }
+      
       /* Ajustare afișare perioade pe dispozitive mobile conform cerințelor */
-      @media (max-width: 800px) {
-        .periods-header {
-          display: none;
-        }
-        .period-row {
-          display: grid;
-          grid-template-columns: 30px repeat(6, 1fr) 36px;
-          gap: 8px 6px;
-          border-bottom: 1px solid #eee;
-          padding-bottom: 12px;
-          margin-bottom: 12px;
-          align-items: center;
-        }
-        .period-num {
-          grid-column: 1;
-          grid-row: 1 / span 2;
-          align-self: center;
-        }
-
+      @media (max-width: 800px) { 
+        .periods-header { display: none; } 
+        .period-row { 
+          display: grid; 
+          grid-template-columns: 30px repeat(6, 1fr) 36px; 
+          gap: 8px 6px; 
+          border-bottom: 1px solid #eee; 
+          padding-bottom: 12px; 
+          margin-bottom: 12px; 
+          align-items: center; 
+        } 
+        .period-num { grid-column: 1; grid-row: 1 / span 2; align-self: center; } 
+        
         /* Rândul 1: Tip activitate și Denumire pe un singur rând */
-        .period-row select {
-          grid-column: 2 / span 3;
-          grid-row: 1;
-          margin-bottom: 0;
-          font-size: 13px;
-          padding: 0 4px;
-        }
-        .period-row input.name-input {
-          grid-column: 5 / span 3;
-          grid-row: 1;
-          margin-bottom: 0;
-          font-size: 13px;
-        }
-
+        .period-row select { grid-column: 2 / span 3; grid-row: 1; margin-bottom: 0; font-size: 13px; padding: 0 4px; } 
+        .period-row input.name-input { grid-column: 5 / span 3; grid-row: 1; margin-bottom: 0; font-size: 13px; } 
+        
         /* Rândul 2: De la, Până la și Durata pe alt rând */
-        .period-row > :nth-child(4) {
-          grid-column: 2 / span 2;
-          grid-row: 2;
-        } /* De la (primul .date-wrap) */
-        .period-row > :nth-child(5) {
-          grid-column: 4 / span 2;
-          grid-row: 2;
-        } /* Până la (al doilea .date-wrap) */
-        .period-row .dur-display {
-          grid-column: 6 / span 2;
-          grid-row: 2;
-          margin-bottom: 0;
-          font-size: 11px;
-          text-align: center;
-          padding: 0;
-          align-self: center;
-        }
-
-        .period-row .date-wrap input[type="text"] {
-          font-size: 12px;
-          padding: 0 4px;
-        }
-        .del-btn {
-          grid-column: 8;
-          grid-row: 1 / span 2;
-          align-self: center;
-          margin-top: 0;
-        }
+        .period-row > :nth-child(4) { grid-column: 2 / span 2; grid-row: 2; } /* De la (primul .date-wrap) */
+        .period-row > :nth-child(5) { grid-column: 4 / span 2; grid-row: 2; } /* Până la (al doilea .date-wrap) */
+        .period-row .dur-display { grid-column: 6 / span 2; grid-row: 2; margin-bottom: 0; font-size: 11px; text-align: center; padding: 0; align-self: center; } 
+        
+        .period-row .date-wrap input[type="text"] { font-size: 12px; padding: 0 4px; }
+        .del-btn { grid-column: 8; grid-row: 1 / span 2; align-self: center; margin-top: 0; } 
       }
     </style>
   </head>
@@ -545,50 +107,18 @@
       <div class="icon">🛡️</div>
       <div>
         <h1>Calculator vârstă pensionare – Apărare &amp; Ordine Publică</h1>
-        <p>
-          Legea nr. 223/2015 cu modificările Legii 282/2023 &mdash; actualizat
-          2026
-        </p>
+        <p>Legea nr. 223/2015 cu modificările Legii 282/2023 &mdash; actualizat 2026</p>
       </div>
     </header>
 
     <div class="container">
+      
       <div class="actions-bar">
-        <button
-          class="action-btn"
-          onclick="saveToLocal()"
-          title="Salvează datele în browser"
-        >
-          💾 Salvează local
-        </button>
-        <button
-          class="action-btn"
-          onclick="loadFromLocal()"
-          title="Încarcă datele din browser"
-        >
-          📂 Încarcă local
-        </button>
-        <button
-          class="action-btn"
-          onclick="exportJSON()"
-          title="Descarcă datele pe dispozitiv"
-        >
-          📥 Exportă JSON
-        </button>
-        <button
-          class="action-btn"
-          onclick="document.getElementById('importFile').click()"
-          title="Încarcă date din fișier"
-        >
-          📤 Importă JSON
-        </button>
-        <input
-          type="file"
-          id="importFile"
-          accept=".json"
-          style="display: none"
-          onchange="importJSON(event)"
-        />
+        <button class="action-btn" onclick="saveToLocal()" title="Salvează datele în browser">💾 Salvează local</button>
+        <button class="action-btn" onclick="loadFromLocal()" title="Încarcă datele din browser">📂 Încarcă local</button>
+        <button class="action-btn" onclick="exportJSON()" title="Descarcă datele pe dispozitiv">📥 Exportă JSON</button>
+        <button class="action-btn" onclick="document.getElementById('importFile').click()" title="Încarcă date din fișier">📤 Importă JSON</button>
+        <input type="file" id="importFile" accept=".json" style="display: none" onchange="importJSON(event)">
       </div>
 
       <div class="card">
@@ -597,32 +127,18 @@
           <div class="form-row">
             <label>Data nașterii</label>
             <div class="date-wrap">
-              <input
-                type="text"
-                id="dob"
-                class="date-input"
-                placeholder="ZZ.LL.AAAA"
-                maxlength="10"
-                oninput="handleDateInput(event, this)"
-                onblur="validateDateInput(this)"
-              />
-              <input type="date" onchange="syncDate(this)" />
+              <input type="text" id="dob" class="date-input" placeholder="ZZ.LL.AAAA" maxlength="10"
+                oninput="handleDateInput(event, this)" onblur="validateDateInput(this)">
+              <input type="date" onchange="syncDate(this)">
               <span>📅</span>
             </div>
           </div>
           <div class="form-row">
             <label>Data verificării</label>
             <div class="date-wrap">
-              <input
-                type="text"
-                id="checkDate"
-                class="date-input"
-                placeholder="ZZ.LL.AAAA"
-                maxlength="10"
-                oninput="handleDateInput(event, this)"
-                onblur="validateDateInput(this)"
-              />
-              <input type="date" onchange="syncDate(this)" />
+              <input type="text" id="checkDate" class="date-input" placeholder="ZZ.LL.AAAA" maxlength="10"
+                oninput="handleDateInput(event, this)" onblur="validateDateInput(this)">
+              <input type="date" onchange="syncDate(this)">
               <span>📅</span>
             </div>
           </div>
@@ -633,96 +149,44 @@
         <div class="card-head">📋 Perioade de activitate</div>
         <div class="card-body">
           <div class="info-box">
-            Introduceți toate perioadele de activitate în ordine cronologică. La
-            adăugare, data de start este completată automat cu ziua următoare
-            sfârșitului perioadei precedente (pentru continuitate). Calendarul
-            vă ajută la selecție ușoară!
+            Introduceți toate perioadele de activitate în ordine cronologică.
+            La adăugare, data de start este completată automat cu ziua următoare
+            sfârșitului perioadei precedente (pentru continuitate). Calendarul vă ajută la selecție ușoară!
           </div>
           <div class="periods-header">
-            <div></div>
-            <div>Tip activitate</div>
-            <div>Denumire</div>
-            <div>De la</div>
-            <div>Până la</div>
-            <div>Durată</div>
-            <div></div>
+            <div></div><div>Tip activitate</div><div>Denumire</div><div>De la</div><div>Până la</div><div>Durată</div><div></div>
           </div>
           <div id="periods-list"></div>
-          <button class="add-btn" onclick="addPeriod()">
-            ＋ Adaugă perioadă
-          </button>
+          <button class="add-btn" onclick="addPeriod()">＋ Adaugă perioadă</button>
           <div class="legend">
-            <div class="legend-item">
-              <div class="legend-dot" style="background: var(--c-civil)"></div>
-              Civilă
-            </div>
-            <div class="legend-item">
-              <div class="legend-dot" style="background: var(--c-normal)"></div>
-              Normal
-            </div>
-            <div class="legend-item">
-              <div class="legend-dot" style="background: var(--c-deos)"></div>
-              Deosebite
-            </div>
-            <div class="legend-item">
-              <div class="legend-dot" style="background: var(--c-spec)"></div>
-              Speciale
-            </div>
+            <div class="legend-item"><div class="legend-dot" style="background: var(--c-civil)"></div> Civilă</div>
+            <div class="legend-item"><div class="legend-dot" style="background: var(--c-normal)"></div> Normal</div>
+            <div class="legend-item"><div class="legend-dot" style="background: var(--c-deos)"></div> Deosebite</div>
+            <div class="legend-item"><div class="legend-dot" style="background: var(--c-spec)"></div> Speciale</div>
           </div>
         </div>
       </div>
 
-      <button class="calc-btn" onclick="calculate()">
-        ⚖️ Calculează dreptul la pensionare
-      </button>
+      <button class="calc-btn" onclick="calculate()">⚖️ Calculează dreptul la pensionare</button>
       <div id="result"></div>
     </div>
 
     <script>
       const RED_DEOSEBITE = [
-        { ani: 6, luni: 0 },
-        { ani: 8, luni: 6 },
-        { ani: 10, luni: 12 },
-        { ani: 12, luni: 18 },
-        { ani: 14, luni: 24 },
-        { ani: 16, luni: 30 },
-        { ani: 18, luni: 36 },
-        { ani: 20, luni: 42 },
-        { ani: 22, luni: 48 },
-        { ani: 24, luni: 54 },
-        { ani: 26, luni: 60 },
-        { ani: 28, luni: 66 },
-        { ani: 30, luni: 72 },
-        { ani: 32, luni: 78 },
-        { ani: 35, luni: 84 },
+        { ani: 6, luni: 0 }, { ani: 8, luni: 6 }, { ani: 10, luni: 12 }, { ani: 12, luni: 18 },
+        { ani: 14, luni: 24 }, { ani: 16, luni: 30 }, { ani: 18, luni: 36 }, { ani: 20, luni: 42 },
+        { ani: 22, luni: 48 }, { ani: 24, luni: 54 }, { ani: 26, luni: 60 }, { ani: 28, luni: 66 },
+        { ani: 30, luni: 72 }, { ani: 32, luni: 78 }, { ani: 35, luni: 84 },
       ];
 
       const RED_SPECIALE = [
-        { ani: 2, luni: 12 },
-        { ani: 3, luni: 18 },
-        { ani: 4, luni: 24 },
-        { ani: 5, luni: 30 },
-        { ani: 6, luni: 36 },
-        { ani: 7, luni: 42 },
-        { ani: 8, luni: 48 },
-        { ani: 9, luni: 54 },
-        { ani: 10, luni: 60 },
-        { ani: 11, luni: 66 },
-        { ani: 12, luni: 72 },
-        { ani: 13, luni: 78 },
-        { ani: 14, luni: 84 },
-        { ani: 15, luni: 90 },
-        { ani: 16, luni: 96 },
-        { ani: 17, luni: 102 },
-        { ani: 18, luni: 108 },
-        { ani: 19, luni: 114 },
-        { ani: 20, luni: 120 },
-        { ani: 21, luni: 126 },
-        { ani: 22, luni: 132 },
-        { ani: 23, luni: 138 },
-        { ani: 24, luni: 144 },
-        { ani: 25, luni: 150 },
-        { ani: 26, luni: 156 },
+        { ani: 2, luni: 12 }, { ani: 3, luni: 18 }, { ani: 4, luni: 24 }, { ani: 5, luni: 30 },
+        { ani: 6, luni: 36 }, { ani: 7, luni: 42 }, { ani: 8, luni: 48 }, { ani: 9, luni: 54 },
+        { ani: 10, luni: 60 }, { ani: 11, luni: 66 }, { ani: 12, luni: 72 }, { ani: 13, luni: 78 },
+        { ani: 14, luni: 84 }, { ani: 15, luni: 90 }, { ani: 16, luni: 96 }, { ani: 17, luni: 102 },
+        { ani: 18, luni: 108 }, { ani: 19, luni: 114 }, { ani: 20, luni: 120 }, { ani: 21, luni: 126 },
+        { ani: 22, luni: 132 }, { ani: 23, luni: 138 }, { ani: 24, luni: 144 }, { ani: 25, luni: 150 },
+        { ani: 26, luni: 156 }
       ];
 
       function parseDate(str) {
@@ -730,12 +194,7 @@
         const m = str.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
         if (!m) return null;
         const d = new Date(+m[3], +m[2] - 1, +m[1]);
-        if (
-          isNaN(d.getTime()) ||
-          d.getDate() !== +m[1] ||
-          d.getMonth() !== +m[2] - 1
-        )
-          return null;
+        if (isNaN(d.getTime()) || d.getDate() !== +m[1] || d.getMonth() !== +m[2] - 1) return null;
         return d;
       }
 
@@ -746,16 +205,8 @@
         return `${dd}.${mm}.${d.getFullYear()}`;
       }
 
-      function addDays(d, n) {
-        const r = new Date(d);
-        r.setDate(r.getDate() + n);
-        return r;
-      }
-      function addMonths(d, m) {
-        const r = new Date(d);
-        r.setMonth(r.getMonth() + m);
-        return r;
-      }
+      function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate() + n); return r; }
+      function addMonths(d, m) { const r = new Date(d); r.setMonth(r.getMonth() + m); return r; }
 
       function diffYMD(d1, d2) {
         if (!d1 || !d2 || d2 <= d1) return { y: 0, m: 0, d: 0 };
@@ -764,40 +215,27 @@
         let d = d2.getDate() - d1.getDate();
         if (d < 0) {
           m--;
-          let daysInPrevMonth = new Date(
-            d2.getFullYear(),
-            d2.getMonth(),
-            0,
-          ).getDate();
+          let daysInPrevMonth = new Date(d2.getFullYear(), d2.getMonth(), 0).getDate();
           d += daysInPrevMonth;
         }
-        if (m < 0) {
-          y--;
-          m += 12;
-        }
+        if (m < 0) { y--; m += 12; }
         return { y, m, d };
       }
 
       function fmtYMD_text(ymd) {
         let parts = [];
-        if (ymd.y > 0) parts.push(`${ymd.y} an${ymd.y !== 1 ? "i" : ""}`);
-        if (ymd.m > 0) parts.push(`${ymd.m} lun${ymd.m !== 1 ? "i" : "ă"}`);
-        if (ymd.d > 0) parts.push(`${ymd.d} zi${ymd.d !== 1 ? "le" : ""}`);
-        return parts.length > 0 ? parts.join(", ") : "0 zile";
+        if (ymd.y > 0) parts.push(`${ymd.y} an${ymd.y !== 1 ? 'i' : ''}`);
+        if (ymd.m > 0) parts.push(`${ymd.m} lun${ymd.m !== 1 ? 'i' : 'ă'}`);
+        if (ymd.d > 0) parts.push(`${ymd.d} zi${ymd.d !== 1 ? 'le' : ''}`);
+        return parts.length > 0 ? parts.join(', ') : "0 zile";
       }
 
       function addYMD_struct(base, add) {
         let y = base.y + add.y;
         let m = base.m + add.m;
         let d = base.d + add.d;
-        if (d >= 30) {
-          m += Math.floor(d / 30);
-          d = d % 30;
-        }
-        if (m >= 12) {
-          y += Math.floor(m / 12);
-          m = m % 12;
-        }
+        if (d >= 30) { m += Math.floor(d / 30); d = d % 30; }
+        if (m >= 12) { y += Math.floor(m / 12); m = m % 12; }
         return { y, m, d };
       }
 
@@ -825,33 +263,27 @@
         if (!date) return 12;
         const y = date.getFullYear();
         const m = date.getMonth(); // 0 = Ian, 5 = Iun, 6 = Iul etc.
-
+        
         if (y < 2026) return 12;
         if (y === 2026) {
-          return m >= 5 ? 17 : 16; // Din 01.06.2026 până la 31.12.2026 este 17 luni
+          return (m >= 5) ? 17 : 16; // Din 01.06.2026 până la 31.12.2026 este 17 luni
         }
-
+        
         // Din 2027 încolo (creștere semestrială cu câte 1 lună)
         // 01.01.2027 - 30.06.2027 -> 18 luni
         // 01.07.2027 - 31.12.2027 -> 19 luni etc.
         let months = 18 + (y - 2027) * 2 + (m >= 6 ? 1 : 0);
-
+        
         // Plafonare maximă conform prevederilor eșalonării pe termen lung pentru pensii militare
         if (months > 30) months = 30;
         return months;
       }
 
       function handleDateInput(e, input) {
-        if (
-          e &&
-          (e.inputType === "deleteContentBackward" ||
-            e.inputType === "deleteContentForward")
-        )
-          return;
-        let v = input.value.replace(/[^\d.]/g, "");
-        if (v.length === 2 && !v.includes(".")) v += ".";
-        if (v.length === 5 && v.indexOf(".") === 2 && v.lastIndexOf(".") === 2)
-          v += ".";
+        if (e && (e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward')) return;
+        let v = input.value.replace(/[^\d.]/g, '');
+        if (v.length === 2 && !v.includes('.')) v += '.';
+        if (v.length === 5 && v.indexOf('.') === 2 && v.lastIndexOf('.') === 2) v += '.';
         input.value = v.slice(0, 10);
         input.classList.remove("date-err");
       }
@@ -859,27 +291,24 @@
       function syncDate(picker) {
         let val = picker.value;
         if (!val) return;
-        let parts = val.split("-");
+        let parts = val.split('-');
         let formatted = `${parts[2]}.${parts[1]}.${parts[0]}`;
         let container = picker.parentElement;
-        let textInput = container.querySelector(".date-input");
+        let textInput = container.querySelector('.date-input');
         if (textInput) {
-          textInput.value = formatted;
-          validateDateInput(textInput);
-          let pid = textInput.getAttribute("data-pid");
-          if (pid != null) {
-            let field = picker.getAttribute("data-target-field");
-            if (field) updatePeriodNoRender(parseInt(pid), field, formatted);
-          }
+            textInput.value = formatted;
+            validateDateInput(textInput);
+            let pid = textInput.getAttribute('data-pid');
+            if (pid != null) {
+                let field = picker.getAttribute('data-target-field');
+                if (field) updatePeriodNoRender(parseInt(pid), field, formatted);
+            }
         }
       }
 
       function validateDateInput(input) {
         const v = input.value.trim();
-        if (!v) {
-          input.classList.remove("date-err");
-          return;
-        }
+        if (!v) { input.classList.remove("date-err"); return; }
         const d = parseDate(v);
         if (!d) input.classList.add("date-err");
         else input.classList.remove("date-err");
@@ -890,16 +319,8 @@
       const TYPE_META = {
         civil: { label: "Civilă", cls: "p-civil", selcls: "sel-civil" },
         normal: { label: "Normal", cls: "p-normal", selcls: "sel-normal" },
-        deosebite: {
-          label: "Deosebite",
-          cls: "p-deosebite",
-          selcls: "sel-deosebite",
-        },
-        speciale: {
-          label: "Speciale",
-          cls: "p-speciale",
-          selcls: "sel-speciale",
-        },
+        deosebite: { label: "Deosebite", cls: "p-deosebite", selcls: "sel-deosebite" },
+        speciale: { label: "Speciale", cls: "p-speciale", selcls: "sel-speciale" },
       };
 
       function getLastEnd() {
@@ -915,41 +336,28 @@
         const id = pidNext++;
         const lastEnd = getLastEnd();
         let autoFrom = lastEnd ? fmtDate(addDays(lastEnd, 1)) : "";
-        periods.push({
-          id,
-          type: "speciale",
-          name: "",
-          from: autoFrom,
-          to: "",
-        });
+        periods.push({ id, type: "speciale", name: "", from: autoFrom, to: "" }); 
         renderPeriods();
         setTimeout(() => {
           const inputs = document.querySelectorAll(`[data-pid="${id}"]`);
           if (inputs.length) {
             const fromEl = inputs[0];
-            if (!fromEl.value) fromEl.focus();
-            else if (inputs[1] && !inputs[1].value) inputs[1].focus();
+            if (!fromEl.value) fromEl.focus(); else if (inputs[1] && !inputs[1].value) inputs[1].focus();
           }
         }, 50);
       }
 
-      function delPeriod(id) {
-        periods = periods.filter((p) => p.id !== id);
-        renderPeriods();
-      }
+      function delPeriod(id) { periods = periods.filter((p) => p.id !== id); renderPeriods(); }
 
       function updatePeriodNoRender(id, field, val) {
         const p = periods.find((x) => x.id === id);
         if (p) {
           p[field] = val;
-          if (field === "name") return;
+          if (field === 'name') return; 
 
-          const d1 = parseDate(p.from),
-            d2 = parseDate(p.to);
+          const d1 = parseDate(p.from), d2 = parseDate(p.to);
           let durText = "–";
-          if (d1 && d2 && d2 > d1) {
-            durText = fmtYMD_text(diffYMD(d1, d2));
-          }
+          if (d1 && d2 && d2 > d1) { durText = fmtYMD_text(diffYMD(d1, d2)); }
           const rowEl = document.getElementById(`dur-text-${p.id}`);
           if (rowEl) rowEl.innerHTML = durText;
         }
@@ -957,40 +365,30 @@
 
       function updatePeriodType(id, val) {
         const p = periods.find((x) => x.id === id);
-        if (p) {
-          p.type = val;
-          renderPeriods();
-        }
+        if (p) { p.type = val; renderPeriods(); }
       }
 
       function renderPeriods() {
         const el = document.getElementById("periods-list");
         if (!periods.length) {
-          el.innerHTML =
-            '<p style="font-size:13px;color:#aaa;padding:8px 0">Nicio perioadă. Apăsați ＋ Adaugă perioadă.</p>';
+          el.innerHTML = '<p style="font-size:13px;color:#aaa;padding:8px 0">Nicio perioadă. Apăsați ＋ Adaugă perioadă.</p>';
           return;
         }
 
-        el.innerHTML = periods
-          .map((p, idx) => {
+        el.innerHTML = periods.map((p, idx) => {
             const meta = TYPE_META[p.type] || TYPE_META.normal;
-            const d1 = parseDate(p.from),
-              d2 = parseDate(p.to);
-            let durText =
-              d1 && d2 && d2 > d1 ? fmtYMD_text(diffYMD(d1, d2)) : "–";
-            const typeOptions = Object.entries(TYPE_META)
-              .map(
-                ([v, m]) =>
-                  `<option value="${v}"${p.type === v ? " selected" : ""}>${m.label}</option>`,
-              )
-              .join("");
+            const d1 = parseDate(p.from), d2 = parseDate(p.to);
+            let durText = (d1 && d2 && d2 > d1) ? fmtYMD_text(diffYMD(d1, d2)) : "–";
+            const typeOptions = Object.entries(TYPE_META).map(([v, m]) =>
+                  `<option value="${v}"${p.type === v ? " selected" : ""}>${m.label}</option>`
+            ).join("");
 
             return `
             <div class="period-row">
               <div class="period-num ${meta.cls}" title="${meta.label}">${idx + 1}</div>
               <select class="${meta.selcls}" onchange="updatePeriodType(${p.id}, this.value)">${typeOptions}</select>
               
-              <input type="text" class="name-input" placeholder="Ex: curs, armată..." value="${p.name || ""}"
+              <input type="text" class="name-input" placeholder="Ex: curs, armată..." value="${p.name || ''}"
                   oninput="updatePeriodNoRender(${p.id}, 'name', this.value)">
 
               <div class="date-wrap">
@@ -1012,29 +410,26 @@
               <div id="dur-text-${p.id}" class="dur-display">${durText}</div>
               <button class="del-btn" onclick="delPeriod(${p.id})" title="Șterge perioadă">✕</button>
             </div>`;
-          })
-          .join("");
+          }).join("");
       }
 
       /* GESTIONARE DATE */
-
+      
       function getStateData() {
         return {
           dob: document.getElementById("dob").value,
           checkDate: document.getElementById("checkDate").value,
-          periods: periods,
+          periods: periods
         };
       }
 
       function loadStateData(data) {
         if (!data) return;
         if (data.dob) document.getElementById("dob").value = data.dob;
-        if (data.checkDate)
-          document.getElementById("checkDate").value = data.checkDate;
+        if (data.checkDate) document.getElementById("checkDate").value = data.checkDate;
         if (data.periods && Array.isArray(data.periods)) {
           periods = data.periods;
-          pidNext =
-            periods.length > 0 ? Math.max(...periods.map((p) => p.id)) + 1 : 0;
+          pidNext = periods.length > 0 ? Math.max(...periods.map(p => p.id)) + 1 : 0;
         }
         validateDateInput(document.getElementById("dob"));
         validateDateInput(document.getElementById("checkDate"));
@@ -1061,16 +456,11 @@
       }
 
       function exportJSON() {
-        const dataStr =
-          "data:text/json;charset=utf-8," +
-          encodeURIComponent(JSON.stringify(getStateData(), null, 2));
-        const downloadAnchorNode = document.createElement("a");
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(getStateData(), null, 2));
+        const downloadAnchorNode = document.createElement('a');
         downloadAnchorNode.setAttribute("href", dataStr);
-        downloadAnchorNode.setAttribute(
-          "download",
-          "date_pensie_militara.json",
-        );
-        document.body.appendChild(downloadAnchorNode);
+        downloadAnchorNode.setAttribute("download", "date_pensie_militara.json");
+        document.body.appendChild(downloadAnchorNode); 
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
       }
@@ -1079,19 +469,17 @@
         const file = event.target.files[0];
         if (!file) return;
         const reader = new FileReader();
-        reader.onload = function (e) {
+        reader.onload = function(e) {
           try {
             const data = JSON.parse(e.target.result);
             loadStateData(data);
             alert("Datele au fost importate cu succes!");
           } catch (err) {
-            alert(
-              "Eroare la citirea fișierului. Asigurați-vă că este un format valid JSON.",
-            );
+            alert("Eroare la citirea fișierului. Asigurați-vă că este un format valid JSON.");
           }
         };
         reader.readAsText(file);
-        event.target.value = "";
+        event.target.value = ''; 
       }
 
       /* CALCULUL DREPTURILOR */
@@ -1103,9 +491,7 @@
         const checkDate = parseDate(chkEl.value);
 
         if (!dob || !checkDate || periods.length === 0) {
-          alert(
-            "Revedeți datele completate: lipsesc date valide sau perioade.",
-          );
+          alert("Revedeți datele completate: lipsesc date valide sau perioade.");
           return;
         }
 
@@ -1113,12 +499,11 @@
         let servYMD = { y: 0, m: 0, d: 0 };
         let specYMD = { y: 0, m: 0, d: 0 };
         let deosYMD = { y: 0, m: 0, d: 0 };
-        let normYMD = { y: 0, m: 0, d: 0 };
+        let normYMD = { y: 0, m: 0, d: 0 }; 
 
         for (let i = 0; i < periods.length; i++) {
           const p = periods[i];
-          const d1 = parseDate(p.from),
-            d2 = parseDate(p.to);
+          const d1 = parseDate(p.from), d2 = parseDate(p.to);
           if (!d1 || !d2 || d2 <= d1 || d1 < dob) {
             alert(`Perioadă ${i + 1} invalidă sau necorelată cronologic.`);
             return;
@@ -1128,32 +513,22 @@
           if (p.type !== "civil") servYMD = addYMD_struct(servYMD, diff);
           if (p.type === "speciale") specYMD = addYMD_struct(specYMD, diff);
           if (p.type === "deosebite") deosYMD = addYMD_struct(deosYMD, diff);
-          if (p.type === "normal" || p.type === "civil")
-            normYMD = addYMD_struct(normYMD, diff);
+          if (p.type === "normal" || p.type === "civil") normYMD = addYMD_struct(normYMD, diff);
         }
 
         const ageNowYMD = diffYMD(dob, checkDate);
         const ageNowMonths = ageNowYMD.y * 12 + ageNowYMD.m;
-
+        
         const cumMonths = totalYMD.y * 12 + totalYMD.m;
         const servMonths = servYMD.y * 12 + servYMD.m;
 
         const stdAgeMNow = getStandardAgeMonthsAtDate(checkDate);
-        const redDeosNow = getReductionMonths(
-          RED_DEOSEBITE,
-          deosYMD.y + deosYMD.m / 12,
-        );
-        const redSpecNow = getReductionMonths(
-          RED_SPECIALE,
-          specYMD.y + specYMD.m / 12,
-        );
-
+        const redDeosNow = getReductionMonths(RED_DEOSEBITE, deosYMD.y + (deosYMD.m / 12));
+        const redSpecNow = getReductionMonths(RED_SPECIALE, specYMD.y + (specYMD.m / 12));
+        
         const totalRedNow = Math.min(redDeosNow + redSpecNow, 13 * 12);
-        const minAgeMonthsLimit = Math.max(stdAgeMNow - 13 * 12, 47 * 12);
-        const effAgeMNow = Math.max(
-          stdAgeMNow - totalRedNow,
-          minAgeMonthsLimit,
-        );
+        const minAgeMonthsLimit = Math.max(stdAgeMNow - 13 * 12, 47 * 12); 
+        const effAgeMNow = Math.max(stdAgeMNow - totalRedNow, minAgeMonthsLimit);
 
         const condVarsta = ageNowMonths >= effAgeMNow;
         const condVechimeCum = cumMonths >= 25 * 12;
@@ -1166,49 +541,39 @@
         let projEffAgeM = effAgeMNow;
 
         if (condComplete) {
-          pensionDate = checkDate;
+            pensionDate = checkDate;
         } else {
-          let start = new Date(checkDate);
-          let testD = new Date(start);
-          for (let days = 1; days <= 15000; days++) {
-            testD.setDate(testD.getDate() + 1);
+            let start = new Date(checkDate);
+            let testD = new Date(start);
+            for(let days = 1; days <= 15000; days++) {
+                testD.setDate(testD.getDate() + 1);
+                
+                let addedYMD = diffYMD(start, testD);
+                let futureAgeYMD = addYMD_struct(ageNowYMD, addedYMD);
+                let fAgeMonths = futureAgeYMD.y * 12 + futureAgeYMD.m;
 
-            let addedYMD = diffYMD(start, testD);
-            let futureAgeYMD = addYMD_struct(ageNowYMD, addedYMD);
-            let fAgeMonths = futureAgeYMD.y * 12 + futureAgeYMD.m;
+                let fSpecYMD = addYMD_struct(specYMD, addedYMD);
+                let fCumYMD = addYMD_struct(totalYMD, addedYMD);
+                let fServYMD = addYMD_struct(servYMD, addedYMD);
 
-            let fSpecYMD = addYMD_struct(specYMD, addedYMD);
-            let fCumYMD = addYMD_struct(totalYMD, addedYMD);
-            let fServYMD = addYMD_struct(servYMD, addedYMD);
+                let fStdAgeM = getStandardAgeMonthsAtDate(testD);
+                let fRedDeos = getReductionMonths(RED_DEOSEBITE, deosYMD.y + (deosYMD.m / 12));
+                let fRedSpec = getReductionMonths(RED_SPECIALE, fSpecYMD.y + (fSpecYMD.m / 12));
+                
+                let fTotRed = Math.min(fRedDeos + fRedSpec, 13 * 12);
+                let fEffAgeM = Math.max(fStdAgeM - fTotRed, fStdAgeM - 13 * 12); 
 
-            let fStdAgeM = getStandardAgeMonthsAtDate(testD);
-            let fRedDeos = getReductionMonths(
-              RED_DEOSEBITE,
-              deosYMD.y + deosYMD.m / 12,
-            );
-            let fRedSpec = getReductionMonths(
-              RED_SPECIALE,
-              fSpecYMD.y + fSpecYMD.m / 12,
-            );
+                let fCumMonths = fCumYMD.y * 12 + fCumYMD.m;
+                let fServMonths = fServYMD.y * 12 + fServYMD.m;
 
-            let fTotRed = Math.min(fRedDeos + fRedSpec, 13 * 12);
-            let fEffAgeM = Math.max(fStdAgeM - fTotRed, fStdAgeM - 13 * 12);
-
-            let fCumMonths = fCumYMD.y * 12 + fCumYMD.m;
-            let fServMonths = fServYMD.y * 12 + fServYMD.m;
-
-            if (
-              fAgeMonths >= fEffAgeM &&
-              fCumMonths >= 25 * 12 &&
-              fServMonths >= 15 * 12
-            ) {
-              pensionDate = new Date(testD);
-              projTotRed = fTotRed;
-              projStdAgeM = fStdAgeM;
-              projEffAgeM = fEffAgeM;
-              break;
+                if (fAgeMonths >= fEffAgeM && fCumMonths >= 25 * 12 && fServMonths >= 15 * 12) {
+                    pensionDate = new Date(testD);
+                    projTotRed = fTotRed;
+                    projStdAgeM = fStdAgeM;
+                    projEffAgeM = fEffAgeM;
+                    break;
+                }
             }
-          }
         }
 
         const statsHtml = `
@@ -1254,9 +619,8 @@
         } else {
           let difZile = 0;
           if (pensionDate) {
-            const deltaPensie = diffYMD(checkDate, pensionDate);
-            difZile =
-              deltaPensie.y > 0 || deltaPensie.m > 0 || deltaPensie.d > 0;
+              const deltaPensie = diffYMD(checkDate, pensionDate);
+              difZile = deltaPensie.y > 0 || deltaPensie.m > 0 || deltaPensie.d > 0;
           }
 
           resultHtml = `
@@ -1273,9 +637,9 @@
                 <div style="font-size:24px;font-weight:700;margin:6px 0;color:#854100;">${pensionDate ? fmtDate(pensionDate) : "Necunoscut"}</div>
                 
                 <div style="margin-top:12px; font-size: 14px; background: rgba(255,255,255,0.6); padding: 10px; border-radius: 6px;">
-                  Vârsta standard în ${pensionDate ? pensionDate.getFullYear() : "anul ieșirii"}: <strong>${Math.floor(projStdAgeM / 12)} ani${projStdAgeM % 12 ? " și " + (projStdAgeM % 12) + " luni" : ""}</strong><br>
-                  Reducere maximă totală proiectată la acea dată: <strong>−${Math.floor(projTotRed / 12)} ani ${projTotRed % 12 > 0 ? "și " + (projTotRed % 12) + " luni" : ""}</strong><br>
-                  Vârsta de pensionare diminuată ce va fi atinsă: <strong style="color: var(--blue);">${Math.floor(projEffAgeM / 12)} ani${projEffAgeM % 12 ? " și " + (projEffAgeM % 12) + " luni" : ""}</strong><br>
+                  Vârsta standard în ${pensionDate ? pensionDate.getFullYear() : "anul ieșirii"}: <strong>${Math.floor(projStdAgeM / 12)} ani${(projStdAgeM % 12) ? ' și ' + (projStdAgeM % 12) + ' luni' : ''}</strong><br>
+                  Reducere maximă totală proiectată la acea dată: <strong>−${Math.floor(projTotRed / 12)} ani ${projTotRed % 12 > 0 ? "și "+ (projTotRed % 12) + " luni" : ""}</strong><br>
+                  Vârsta de pensionare diminuată ce va fi atinsă: <strong style="color: var(--blue);">${Math.floor(projEffAgeM / 12)} ani${(projEffAgeM % 12) ? ' și ' + (projEffAgeM % 12) + ' luni' : ''}</strong><br>
                   📋 Baza de calcul la data pensionării: <strong style="color: #2563ac;">${getCalculationMonths(pensionDate)} luni consecutive</strong>.<br>
                 </div>
                 
