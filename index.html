@@ -953,8 +953,8 @@
           const d1 = parseDate(p.from),
             d2 = parseDate(p.to);
           let durText = "–";
-          if (d1 && d2 && d2 > d1) {
-            durText = fmtYMD_text(diffYMD(d1, d2));
+          if (d1 && d2 && d2 >= d1) {
+            durText = fmtYMD_text(diffYMD(d1, addDays(d2, 1)));
           }
           const rowEl = document.getElementById(`dur-text-${p.id}`);
           if (rowEl) rowEl.innerHTML = durText;
@@ -983,7 +983,9 @@
             const d1 = parseDate(p.from),
               d2 = parseDate(p.to);
             let durText =
-              d1 && d2 && d2 > d1 ? fmtYMD_text(diffYMD(d1, d2)) : "–";
+              d1 && d2 && d2 >= d1
+                ? fmtYMD_text(diffYMD(d1, addDays(d2, 1)))
+                : "–";
             const typeOptions = Object.entries(TYPE_META)
               .map(
                 ([v, m]) =>
@@ -1125,11 +1127,12 @@
           const p = periods[i];
           const d1 = parseDate(p.from),
             d2 = parseDate(p.to);
-          if (!d1 || !d2 || d2 <= d1 || d1 < dob) {
+          if (!d1 || !d2 || d2 < d1 || d1 < dob) {
             alert(`Perioadă ${i + 1} invalidă sau necorelată cronologic.`);
             return;
           }
-          let diff = diffYMD(d1, d2);
+          // +1 zi: 'to' este ultima zi INCLUSĂ (lucrată), deci calculăm intervalul [d1, d2+1)
+          let diff = diffYMD(d1, addDays(d2, 1));
           totalYMD = addYMD_struct(totalYMD, diff);
           if (p.type !== "civil") servYMD = addYMD_struct(servYMD, diff);
           if (p.type === "speciale") specYMD = addYMD_struct(specYMD, diff);
@@ -1174,18 +1177,49 @@
         if (condComplete) {
           pensionDate = checkDate;
         } else {
-          let start = new Date(checkDate);
-          let testD = new Date(start);
+          // Precalculăm zilele brute calendaristice (to inclusiv) pentru fiecare categorie.
+          // Evităm addYMD_struct în buclă pentru a elimina erorile de normalizare cu 30 zile/lună.
+          let totalZileBrute = 0,
+            servZileBrute = 0,
+            specZileBrute = 0;
+          for (let i = 0; i < periods.length; i++) {
+            const p = periods[i];
+            const d1 = parseDate(p.from),
+              d2 = parseDate(p.to);
+            const z = Math.round((addDays(d2, 1) - d1) / 86400000); // +1 zi: to inclusiv
+            totalZileBrute += z;
+            if (p.type !== "civil") servZileBrute += z;
+            if (p.type === "speciale") specZileBrute += z;
+          }
+
+          // Referință fixă pentru conversia zile→luni calendaristice.
+          const REF = new Date(2000, 0, 1);
+          function zileLaLuni(zile) {
+            const end = new Date(REF.getTime() + zile * 86400000);
+            const r = diffYMD(REF, end);
+            return r.y * 12 + r.m;
+          }
+
+          // Tipul ultimei perioade: determină ce categorie crește în zilele viitoare.
+          const lastPType =
+            periods.length > 0 ? periods[periods.length - 1].type : null;
+
+          let testD = new Date(checkDate);
           for (let days = 1; days <= 15000; days++) {
             testD.setDate(testD.getDate() + 1);
 
-            let addedYMD = diffYMD(start, testD);
-            let futureAgeYMD = addYMD_struct(ageNowYMD, addedYMD);
-            let fAgeMonths = futureAgeYMD.y * 12 + futureAgeYMD.m;
+            // VÂRSTĂ: calculată direct dob→testD (calendaristic corect, fără addYMD_struct)
+            const fAgeYMD = diffYMD(dob, testD);
+            const fAgeMonths = fAgeYMD.y * 12 + fAgeYMD.m;
 
-            let fSpecYMD = addYMD_struct(specYMD, addedYMD);
-            let fCumYMD = addYMD_struct(totalYMD, addedYMD);
-            let fServYMD = addYMD_struct(servYMD, addedYMD);
+            // VECHIME: zile brute la checkDate + zilele viitoare (presupunem continuare în același tip)
+            const fTotalZ = totalZileBrute + days;
+            const fServZ = servZileBrute + (lastPType !== "civil" ? days : 0);
+            const fSpecZ =
+              specZileBrute + (lastPType === "speciale" ? days : 0);
+
+            const fCumMonths = zileLaLuni(fTotalZ);
+            const fServMonths = zileLaLuni(fServZ);
 
             let fStdAgeM = getStandardAgeMonthsAtDate(testD);
             let fRedDeos = getReductionMonths(
@@ -1194,14 +1228,11 @@
             );
             let fRedSpec = getReductionMonths(
               RED_SPECIALE,
-              fSpecYMD.y + fSpecYMD.m / 12,
+              zileLaLuni(fSpecZ) / 12,
             );
 
             let fTotRed = Math.min(fRedDeos + fRedSpec, 13 * 12);
             let fEffAgeM = Math.max(fStdAgeM - fTotRed, fStdAgeM - 13 * 12);
-
-            let fCumMonths = fCumYMD.y * 12 + fCumYMD.m;
-            let fServMonths = fServYMD.y * 12 + fServYMD.m;
 
             if (
               fAgeMonths >= fEffAgeM &&
